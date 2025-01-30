@@ -12,8 +12,8 @@ export class MarkersPageComponent implements AfterViewInit {
   public map?: Map;
 
   public currentLngLat: LngLat = new LngLat(
-    -99.23120105306828,
-    21.840564007528073
+    -99.15295427020203,
+    19.421780987344647
   );
 
   ngAfterViewInit(): void {
@@ -23,7 +23,7 @@ export class MarkersPageComponent implements AfterViewInit {
       container: this.divmap.nativeElement, // container ID
       style: 'mapbox://styles/mapbox/streets-v12', // style URL
       center: this.currentLngLat, // starting position [lng, lat]
-      zoom: 10, // starting zoom
+      zoom: 13, // starting zoom
     });
 
     // const markerHtml = document.createElement('div');
