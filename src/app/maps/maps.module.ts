@@ -12,6 +12,7 @@ import { ZoomRangePageComponent } from './pages/zoom-range-page/zoom-range-page.
 
 import * as mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
+import { CounterAloneComponent } from '../alone/components/counter-alone/counter-alone.component';
 (mapboxgl as any).accessToken = environment.mapbox_key;
 
 @NgModule({
@@ -24,6 +25,6 @@ import { environment } from 'src/environments/environment';
     PropertiesPageComponent,
     ZoomRangePageComponent,
   ],
-  imports: [CommonModule, MapsRoutingModule],
+  imports: [CommonModule, MapsRoutingModule, CounterAloneComponent],
 })
 export class MapsModule {}
