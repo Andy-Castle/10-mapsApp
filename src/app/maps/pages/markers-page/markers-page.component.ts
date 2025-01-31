@@ -6,6 +6,11 @@ interface MarkerAndColor {
   marker: Marker;
 }
 
+interface PlainMarker {
+  color: string;
+  lngLat: number[];
+}
+
 @Component({
   templateUrl: './markers-page.component.html',
   styleUrls: ['./markers-page.components.css'],
@@ -32,6 +37,8 @@ export class MarkersPageComponent implements AfterViewInit {
       center: this.currentLngLat, // starting position [lng, lat]
       zoom: 13, // starting zoom
     });
+
+    this.readFromLocalStorage();
 
     // const markerHtml = document.createElement('div');
     // markerHtml.innerHTML = 'Andy';
@@ -70,6 +77,8 @@ export class MarkersPageComponent implements AfterViewInit {
       color,
       marker,
     });
+
+    this.saveToLocalStorage();
   }
 
   deleteMarker(index: number) {
@@ -81,6 +90,36 @@ export class MarkersPageComponent implements AfterViewInit {
     this.map?.flyTo({
       zoom: 14,
       center: marker.getLngLat(),
+    });
+  }
+
+  saveToLocalStorage() {
+    // console.log(this.markers);
+    const plainMarkers: PlainMarker[] = this.markers.map(
+      ({ color, marker }) => {
+        return {
+          color,
+          lngLat: marker.getLngLat().toArray(),
+        };
+      }
+    );
+    // console.log(plainMarkers);
+
+    localStorage.setItem('plainMarkers', JSON.stringify(plainMarkers));
+  }
+
+  readFromLocalStorage() {
+    const plainMarkersString = localStorage.getItem('plainMarkers') ?? '[]';
+
+    const plainMarkers: PlainMarker[] = JSON.parse(plainMarkersString); //! Puede que sea inseguro
+
+    // console.log(plainMarkers);
+
+    plainMarkers.forEach(({ color, lngLat }) => {
+      const [lng, lat] = lngLat;
+
+      const coords = new LngLat(lng, lat);
+      this.addMarker(coords, color);
     });
   }
 }
